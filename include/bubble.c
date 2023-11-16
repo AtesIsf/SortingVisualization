@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -28,8 +27,6 @@ void bubbleStep(data_t *vars)
 	if (pre->val > post->val)
 		swapBlocks(vars->blocks, vars->s_data.j, vars->s_data.j + 1);
 
-	usleep(10);
-
 	vars->s_data.j++;
 }
 
@@ -42,7 +39,10 @@ void bubbleUpdate(data_t *vars)
 		mouse_pos = GetMousePosition();
 
 		if (CheckCollisionPointRec(mouse_pos, vars->bubble_buttons[0]))
+		{
+			vars->sorting = 0;
 			vars->state = MENU;
+		}
 
 		if (CheckCollisionPointRec(mouse_pos, vars->bubble_buttons[1]))
 			vars->sorting = 1;	
@@ -70,6 +70,6 @@ void bubbleDraw(data_t *vars)
 	DrawText("-- Bubble Sort", 400, 58, 26, RAYWHITE);
 
 	for (int i = 0; i < 100; i++)
-		DrawRectangleRec(vars->blocks[i].box, vars->blocks[i].col);
+		DrawRectangleRec(vars->blocks[i].box, RAYWHITE);
 }
 

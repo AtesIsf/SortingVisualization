@@ -21,9 +21,7 @@ typedef struct SortData
 typedef struct Block
 {
 	Rectangle box;
-	Color col;
 	unsigned int val;
-	unsigned int freq;
 } block_t;
 
 typedef struct Data

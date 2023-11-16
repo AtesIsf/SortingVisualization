@@ -6,6 +6,33 @@
 #include "definitions.h"
 #include "bubble.h"
 
+void selStep(data_t *vars)
+{
+	static int min_ind = 0;
+
+	if (! (vars->s_data.j < N_BLOCKS))
+	{
+		if (min_ind != vars->s_data.i)
+			swapBlocks(vars->blocks, min_ind, vars->s_data.i);
+
+		vars->s_data.i++;
+		vars->s_data.j = vars->s_data.i;
+		min_ind = vars->s_data.i + 1;
+
+		if (vars->s_data.i == N_BLOCKS)
+		{
+			vars->s_data.i = 0;
+			vars->s_data.j = 0;
+			vars->sorting = 0;
+		}
+	}
+
+	if (vars->blocks[vars->s_data.j].val < vars->blocks[min_ind].val)
+		min_ind = vars->s_data.j;
+
+	vars->s_data.j++;
+}
+
 void selUpdate(data_t *vars)
 {
 	Vector2 mouse_pos;
@@ -15,16 +42,20 @@ void selUpdate(data_t *vars)
 		mouse_pos = GetMousePosition();
 
 		if (CheckCollisionPointRec(mouse_pos, vars->bubble_buttons[0]))
+		{
+			vars->sorting = 0;
 			vars->state = MENU;
+		}
 
 		if (CheckCollisionPointRec(mouse_pos, vars->bubble_buttons[1]))
-		{
-			// TODO: Start sim logic
-		}
+			vars->sorting = 1;
 
 		if (CheckCollisionPointRec(mouse_pos, vars->bubble_buttons[2]))
 			shuffleBlocks(vars);	
 	}
+
+	if (vars->sorting)
+		selStep(vars);
 }
 
 void selDraw(data_t *vars)
@@ -40,6 +71,6 @@ void selDraw(data_t *vars)
 	DrawText("-- Selection Sort", 400, 58, 26, RAYWHITE);
 
 	for (int i = 0; i < 100; i++)
-		DrawRectangleRec(vars->blocks[i].box, vars->blocks[i].col);
+		DrawRectangleRec(vars->blocks[i].box, RAYWHITE);
 }
 

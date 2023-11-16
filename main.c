@@ -75,13 +75,11 @@ data_t * init()
 
 	for (i = 0; i < N_BLOCKS; i++)
 	{
-		vars->blocks[i].col = RAYWHITE;
 		vars->blocks[i].val = i;
 		vars->blocks[i].box.x = 40 + (9 * i);
 		vars->blocks[i].box.y = 600 - (5 * (i + 1)); // blocks will go from h = 5 to h = 500
 		vars->blocks[i].box.width = 9;
 		vars->blocks[i].box.height = 5 * (i + 1);
-		vars->blocks[i].freq = 0; // TODO: may add that frequency thing later
 	}
 
 	return vars;
