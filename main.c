@@ -9,18 +9,35 @@
 #include "include/bubble.h"
 #include "include/selection.h"
 
-void shuffleBlocks(block_t *blocks)
+void swapBlocks(block_t *blocks, int x, int y)
 {
+	float temp_x;
+	block_t temp_block;
+
+	temp_x = blocks[x].box.x;
+	blocks[x].box.x = blocks[y].box.x;
+	blocks[y].box.x = temp_x;
+
+	temp_block = blocks[x];
+	blocks[x] = blocks[y];
+	blocks[y] = temp_block;
+}
+
+void shuffleBlocks(data_t *vars)
+{
+	if (vars->sorting)
+	{
+		vars->sorting = 0;
+		vars->s_data->i = 0;
+		vars->s_data->j = 0;
+	}
+
 	int i, j;
-	float temp;
 
 	for (i = 0; i < N_BLOCKS - 1; i++)
 	{
 		j = i + rand() / (RAND_MAX / (N_BLOCKS - i) + 1);	
-		
-		temp = blocks[i].box.x;
-		blocks[i].box.x = blocks[j].box.x;
-		blocks[j].box.x = temp;
+		swapBlocks(vars->blocks, i, j);		
 	}
 }
 
@@ -33,6 +50,10 @@ data_t * init()
 
 	data_t *vars = (data_t *) malloc(sizeof(data_t));
 	vars->state = MENU;
+	vars->s_data = (sort_data_t *) malloc(sizeof(sort_data_t));
+
+	vars->s_data->i = 0;
+	vars->s_data->j = 0;
 
 	int i;
 	for (i = 0; i < 3; i++)
@@ -70,6 +91,7 @@ data_t * init()
 void deinit(data_t *vars)
 {
 	CloseWindow();
+	free(vars->s_data);
 	free(vars);
 }
 

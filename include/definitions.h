@@ -12,6 +12,12 @@ typedef enum Scene
 	SELECTION
 } scene_t;
 
+typedef struct SortData
+{
+	int i;
+	int j;
+} sort_data_t;
+
 typedef struct Block
 {
 	Rectangle box;
@@ -24,6 +30,8 @@ typedef struct Data
 {
 	scene_t state;
 	char exit;
+	char sorting;
+	sort_data_t *s_data;
 	block_t blocks[N_BLOCKS]; // 100 * 9px
 	
 	Rectangle menu_buttons[3];
@@ -31,6 +39,8 @@ typedef struct Data
 	Rectangle sel_buttons[3];
 } data_t;
 
-void shuffleBlocks(block_t *blocks);
+void swapBlocks(block_t *blocks, int x, int y);
+
+void shuffleBlocks(data_t *vars);
 
 #endif
