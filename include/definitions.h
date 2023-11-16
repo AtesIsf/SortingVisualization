@@ -31,7 +31,7 @@ typedef struct Data
 	scene_t state;
 	char exit;
 	char sorting;
-	sort_data_t *s_data;
+	sort_data_t s_data;
 	block_t blocks[N_BLOCKS]; // 100 * 9px
 	
 	Rectangle menu_buttons[3];

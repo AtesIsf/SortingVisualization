@@ -9,28 +9,28 @@
 
 void bubbleStep(data_t *vars)
 {
-	if (! (vars->s_data->j < N_BLOCKS - vars->s_data->i - 1))
+	if (! (vars->s_data.j < N_BLOCKS - vars->s_data.i - 1))
 	{
-		vars->s_data->j = 0;
-		vars->s_data->i++;
+		vars->s_data.j = 0;
+		vars->s_data.i++;
 
-		if (vars->s_data->i == N_BLOCKS)
+		if (vars->s_data.i == N_BLOCKS)
 		{
-			vars->s_data->i = 0;
-			vars->s_data->j = 0;
+			vars->s_data.i = 0;
+			vars->s_data.j = 0;
 			vars->sorting = 0;
 		}
 	}
 
-	block_t *pre = &(vars->blocks[vars->s_data->j]);
-	block_t *post = &(vars->blocks[vars->s_data->j + 1]);
+	block_t *pre = &(vars->blocks[vars->s_data.j]);
+	block_t *post = &(vars->blocks[vars->s_data.j + 1]);
 
 	if (pre->val > post->val)
-		swapBlocks(vars->blocks, vars->s_data->j, vars->s_data->j + 1);
+		swapBlocks(vars->blocks, vars->s_data.j, vars->s_data.j + 1);
 
 	usleep(10);
 
-	vars->s_data->j++;
+	vars->s_data.j++;
 }
 
 void bubbleUpdate(data_t *vars)

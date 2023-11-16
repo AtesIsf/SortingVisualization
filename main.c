@@ -28,8 +28,8 @@ void shuffleBlocks(data_t *vars)
 	if (vars->sorting)
 	{
 		vars->sorting = 0;
-		vars->s_data->i = 0;
-		vars->s_data->j = 0;
+		vars->s_data.i = 0;
+		vars->s_data.j = 0;
 	}
 
 	int i, j;
@@ -50,10 +50,9 @@ data_t * init()
 
 	data_t *vars = (data_t *) malloc(sizeof(data_t));
 	vars->state = MENU;
-	vars->s_data = (sort_data_t *) malloc(sizeof(sort_data_t));
 
-	vars->s_data->i = 0;
-	vars->s_data->j = 0;
+	vars->s_data.i = 0;
+	vars->s_data.j = 0;
 
 	int i;
 	for (i = 0; i < 3; i++)
@@ -91,7 +90,6 @@ data_t * init()
 void deinit(data_t *vars)
 {
 	CloseWindow();
-	free(vars->s_data);
 	free(vars);
 }
 
